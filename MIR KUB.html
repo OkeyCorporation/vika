@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Ваш стиль... */
+        /* (Оставьте стили без изменений) */
+              /* Ваш стиль... */
+              .sidebar {
+            width: 70%; /* Уменьшим ширину сайдбара */
+            background-color: #5681f7;
+            color: #fff;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        /* Новые стили... */
+        .profile-section {
+            width: 30%; /* Ширина секции с профилем */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 100%; /* Ширина картинки */
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .profile-text {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .complaint-section {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .complaint-button {
+            background-color: #5681f7;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+
+        .complaint-result {
+            margin-top: 10px;
+            text-align: center;
+            display: none; /* Изначально скрываем результат */
+        }
+
+        .styled-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .styled-list-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s;
+        }
+
+        .styled-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .styled-list-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Ваш стиль... */
+        .scroll-to-top {
+            width: 40px;
+            height: 40px;
+            background-color: #5681f7;
+            color: #fff;
+            border-radius: 50%;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .scroll-to-top:hover {
+            background-color: #4561d1;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Intro', sans-serif;
+            background-color: #f4f4f4; /* Светло-серый цвет фона */
+        }
+
+        .header {
+            background-color: #5681f7; /* Синий цвет хедера */
+            color: #fff; /* Белый цвет текста */
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .logo {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .main-content {
+            padding: 20px;
+            flex-wrap: wrap; /* Обертывание элементов на маленьких экранах */
+            justify-content: space-between;
+        }
+
+        .sidebar {
+            width: 100%; /* Занимает всю ширину на маленьких экранах */
+            background-color: #5681f7; /* Синий цвет сайдбара */
+            color: #fff; /* Белый цвет текста */
+            padding: 10px;
+            margin-top: 10px; /* Добавим отступ сверху */
+        }
+
+        .sidebar-text {
+            margin-top: 10px; /* Уменьшим отступ */
+        }
+
+        .content {
+            width: 100%; /* Занимает всю ширину на маленьких экранах */
+            margin-top: 10px; /* Добавим отступ сверху */
+        }
+
+        .input-field {
+            width: 100%;
+            margin-top: 10px;
+            resize: vertical; /* Разрешаем вертикальное изменение размера */
+        }
+
+        .publish-button {
+            background-color: #5681f7; /* Синий цвет кнопки */
+            color: #fff; /* Белый цвет текста */
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px; /* Добавим отступ сверху */
+        }
+
+        .post {
+            margin-top: 20px;
+            border-top: 1px solid #ddd; /* Сплошная горизонтальная линия */
+            padding-top: 10px;
+        }
+
+        .styled-button {
+            background-color: #5681f7;
+            border: none;
+            color: rgb(255, 255, 255);
+            padding: 10px; /* Изменим padding */
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px; /* Уменьшим размер шрифта */
+            margin-top: 10px; /* Добавим отступ сверху */
+        }
+
+        .styled-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .styled-list-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s;
+        }
+
+        .styled-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .styled-list-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .scroll-to-top {
+            width: 40px;
+            height: 40px;
+            background-color: #5681f7;
+            color: #fff;
+            border-radius: 50%;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .scroll-to-top:hover {
+            background-color: #4561d1;
+        }
+    </style>
+    <title>ВКантактах (Пародия на ВКонтакте)</title>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">
+            ВКантактах (Пародия на ВКонтакте)
+        </div>
+        <a href="Braw copy.html" class="styled-button">Мой Аккаунт</a>
+    </div>
+
+    <div class="main-content">
+        <div class="sidebar">
+            <a href="account.html" class="styled-button">Новости</a>
+            <a href="Braw copy.html" class="styled-button">Аккаунт</a>
+            <a href="index.html" class="styled-button">Посты</a>
+        </div>
+        
+        <!-- Новый раздел для профиля -->
+        <div class="profile-section">
+            <img src="channels4_profile.jpg" alt="Profile Image" class="profile-image">
+            <div class="profile-text">Мир Кубиков (c)</div>
+            <div class="complaint-section">
+                <button class="complaint-button" onclick="submitComplaint()">🏴 Пожаловаться</button>
+                <div id="complaintResult" class="complaint-result">Ваша жалоба отправлена. Спасибо за обратную связь!</div>
+            </div>
+        </div>
+<br>
+        <div>
+            <!-- Ваш контент... -->
+            <button id="subscribeButton" onclick="subscribe()">Подписаться</button>
+            <span id="followersCount">Подписчики: 13 501 подписчиков</span>
+        </div>
+    
+        <script>
+            // Функция для обработки подписки
+            function subscribe() {
+                // Получаем элемент, который отображает количество подписчиков
+                var followersCountElement = document.getElementById('followersCount');
+    
+                // Получаем текущее количество подписчиков
+                var currentFollowersCount = parseInt(followersCountElement.textContent.replace(/\D/g, ''));
+    
+                // Увеличиваем количество подписчиков
+                var newFollowersCount = currentFollowersCount + 1;
+    
+                // Обновляем текст элемента
+                followersCountElement.textContent = 'Подписчики: ' + newFollowersCount + ' подписчиков';
+    
+                // Сохраняем новое количество подписчиков в localStorage
+                localStorage.setItem('followersCount', newFollowersCount);
+            }
+    
+            // Загрузка сохраненных данных о подписчиках при загрузке страницы
+            window.onload = function() {
+                var followersCountElement = document.getElementById('followersCount');
+                var savedFollowersCount = localStorage.getItem('followersCount');
+    
+                if (savedFollowersCount !== null) {
+                    // Если есть сохраненное количество подписчиков, обновляем текст элемента
+                    followersCountElement.textContent = 'Подписчики: ' + savedFollowersCount + ' подписчиков';
+                }
+            };
+        </script>
+
+        <!-- Список с красивым дизайном -->
+        <ul class="styled-list" id="postList">
+            <li class="styled-list-item">
+                Наконецто я получил набор о котором я мечтал больше 3 лет! Это лего майнкрафт Горная пещера!
+                <button class="like-button" onclick="likePost(0)">❤️ <span id="likesCount0">123</span></button>
+            </li>
+            <li class="styled-list-item">
+                Увидимся на той стороне, Куп! Невероятная работа bticktacular_builds по фильму "Интерстеллар"
+                <button class="like-button" onclick="likePost(1)">❤️ <span id="likesCount1">815</span></button>
+            </li>
+            <li class="styled-list-item">
+                Поделитесь впечатлением на этот набор или вообще на наборы этой фирмы...
+                <button class="like-button" onclick="likePost(2)">❤️ <span id="likesCount2">146</span></button>
+            </li>
+            <li class="styled-list-item">
+                Первый раз купил наборы что бы собрать сразу альтернативную модель)...
+                <button class="like-button" onclick="likePost(3)">❤️ <span id="likesCount3">93</span></button>
+            </li>
+            <!-- Добавьте другие элементы по мере необходимости -->
+        </ul>
+    </div>
+
+    <!-- Ваш код JavaScript... -->
+
+    <div class="scroll-to-top" onclick="scrollToTop()">&#8679;</div>
+    <script>
+        // Функция для обработки жалобы
+        function submitComplaint() {
+            var complaintResult = document.getElementById('complaintResult');
+            complaintResult.style.display = 'block'; // Показываем результат
+        }
+
+        // Функция для увеличения количества лайков
+        function likePost(postIndex) {
+            var likesCountElement = document.getElementById('likesCount' + postIndex);
+            var currentLikes = parseInt(likesCountElement.textContent, 10);
+            var newLikes = currentLikes + 1;
+            likesCountElement.textContent = newLikes;
+
+            // Сохраняем количество лайков в localStorage
+            localStorage.setItem('postLikes' + postIndex, newLikes);
+        }
+
+        // Загрузка сохраненных данных о лайках при загрузке страницы
+        window.onload = function() {
+            for (var i = 0; i < 4; i++) {
+                var likesCountElement = document.getElementById('likesCount' + i);
+                var savedLikes = localStorage.getItem('postLikes' + i);
+
+                if (savedLikes !== null) {
+                    likesCountElement.textContent = savedLikes;
+                }
+            }
+        };
+
+        // Функция для прокрутки наверх
+        function scrollToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+</body>
+</html>

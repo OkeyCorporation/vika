@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Intro', sans-serif;
+            background-color: #f4f4f4; /* Светло-серый цвет фона */
+        }
+
+        .header {
+            background-color: #5681f7; /* Синий цвет хедера */
+            color: #fff; /* Белый цвет текста */
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .logo {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .main-content {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap; /* Обертывание элементов на маленьких экранах */
+            justify-content: space-between;
+        }
+
+        .content {
+            width: 100%; /* Занимает всю ширину на маленьких экранах */
+            margin-top: 10px; /* Добавим отступ сверху */
+        }
+
+        .post {
+            margin-top: 20px;
+            border-top: 1px solid #ddd; /* Сплошная горизонтальная линия */
+            padding-top: 10px;
+            position: relative;
+        }
+
+        .post-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .like-button,
+        .complain-button {
+            cursor: pointer;
+        }
+
+        .like-button:hover,
+        .complain-button:hover {
+            color: #5681f7;
+        }
+
+        .scroll-to-top {
+            width: 40px;
+            height: 40px;
+            background-color: #5681f7;
+            color: #fff;
+            border-radius: 50%;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .scroll-to-top:hover {
+            background-color: #4561d1;
+        }
+    </style>
+    <title>Посты всех пользователей</title>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">
+            ВКантактах (Пародия на ВКонтаке)
+        </div>
+        <a href="index.html" class="styled-button">Главная</a>
+    </div>
+
+    <div class="main-content">
+        <div class="content">
+            <div id="all-posts-container"></div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            var allPostsContainer = document.getElementById('all-posts-container');
+            var allPosts = JSON.parse(localStorage.getItem('allPosts')) || [];
+
+            allPosts.forEach(function (post) {
+                var postElement = document.createElement('div');
+                postElement.classList.add('post');
+                postElement.innerHTML = `<p>${post.time}</p><p>${post.text}</p>`;
+                postElement.innerHTML += `<div class="post-buttons">
+                                            <span class="like-button" onclick="likePost(this)">❤️ ${post.likes}</span>
+                                            <span class="complain-button" onclick="complainPost(this, '${post.text}')">🏴 Удалить</span>
+                                          </div>`;
+                allPostsContainer.appendChild(postElement);
+            });
+        }
+
+        function likePost(element) {
+            var likeCount = parseInt(element.innerText.split(' ')[1]);
+            likeCount++;
+            element.innerText = `❤️ ${likeCount}`;
+        }
+
+        function complainPost(element, postText) {
+            var bannedWords = ['спам', 'мошенничество', 'оскорбление', 'порно', 'porn', 'педофил', 'педофилия', 'секс', 'sex'];
+            var containsBannedWord = bannedWords.some(word => postText.includes(word));
+
+            if (containsBannedWord) {
+                alert("Пост содержит запрещенные слова и будет удален.");
+                element.parentElement.parentElement.remove();
+            } else {
+                window.location.href = 'ban.html';
+            }
+        }
+    </script>
+
+    <div class="scroll-to-top" onclick="scrollToTop()">&#8679;</div>
+    <script>
+        function scrollToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+
+</body>
+</html>
