@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Intro', sans-serif;
+            background-color: #f4f4f4; /* Светло-серый цвет фона */
+        }
+
+        .header {
+            background-color: #5681f7; /* Синий цвет хедера */
+            color: #fff; /* Белый цвет текста */
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .logo {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .main-content {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap; /* Обертывание элементов на маленьких экранах */
+            justify-content: space-between;
+        }
+
+        .center-text {
+            text-align: center;
+            width: 100%;
+        }
+
+        .input-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .input-field {
+            width: 80%;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #5681f7; /* Синий цвет границы */
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .validation-box {
+            width: 80%;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            box-sizing: border-box;
+            display: none;
+        }
+
+        .valid {
+            background-color: #4CAF50; /* Зеленый цвет */
+            color: white;
+        }
+
+        .invalid {
+            background-color: #f44336; /* Красный цвет */
+            color: white;
+        }
+
+        .styled-button {
+            background-color: #5681f7;
+            border: none;
+            color: rgb(255, 255, 255);
+            padding: 10px; /* Изменим padding */
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px; /* Уменьшим размер шрифта */
+            margin-top: 10px; /* Добавим отступ сверху */
+        }
+
+    </style>
+    <title>ВКантактах (Пародия на ВКонтаке)</title>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">
+            ВКантактах (Пародия на ВКонтаке)
+        </div>
+    </div>
+    <br>
+
+    <div class="main-content">
+        <div class="center-text">
+            <h1>Зарегистрируйся на Вкантактах!!!</h1>
+        </div>
+
+        <div class="input-container">
+            <h4>Напишите ваш email</h4>
+            <input type="text" class="input-field" placeholder="Введите ваш email" id="email">
+            <h4>Напишите ваш пароль</h4>
+            <input type="text" class="input-field" placeholder="Придумайте пароль" id="password">
+
+
+            
+            <!-- Validation box -->
+            <div class="validation-box" id="passwordValidation"></div>
+
+            <button class="styled-button" onclick="validatePassword()">Зарегистрироваться</button>
+            <h5>Уже есть аккаунт?</h5> <a href="login.html" class="styled-button">Войти</a>
+        </div>
+    </div>
+
+    <script>
+        function validatePassword() {
+            // Получаем поле ввода пароля
+            const passwordInput = document.getElementById('password');
+            // Получаем блок для отображения валидации
+            const validationBox = document.getElementById('passwordValidation');
+
+            // Сбрасываем блок валидации
+            validationBox.innerHTML = '';
+
+            // Определяем требования к паролю
+            const requirements = [
+                "Минимум 5 символов",
+                "Хотя бы одна цифра",
+                "Хотя бы одна русская буква",
+                "Хотя бы один специальный символ (!@#$%^&*)",
+                "Хотя бы одна римская цифра (I, V, X, L, C, D, M)",
+                "Один из спонсоров (pepsi, shell, okay)",
+                "Хотя бы один символ черного флага",
+                "Слово 'пароль'",
+                "Хотя бы один двухбуквенный символ периодической таблицы (H, He, Li, Be, ...)",
+                "Смайлик фазы луны (🌛)",
+                "Капча (Случайная капча)",
+            ];
+
+            // Проверяем каждое требование
+            for (const requirement of requirements) {
+                const isValid = checkRequirement(passwordInput.value, requirement);
+                const message = isValid ? '✓ ' + requirement : '✗ ' + requirement;
+
+                // Добавляем сообщение в блок валидации с соответствующим стилем
+                validationBox.innerHTML += `<p class="${isValid ? 'valid' : 'invalid'}">${message}</p>`;
+            }
+
+            // Показываем блок валидации
+            validationBox.style.display = 'block';
+
+            // Проверяем, все ли требования выполнены
+            const isAllValid = requirements.every(req => checkRequirement(passwordInput.value, req));
+            
+            // Если все требования выполнены, перенаправляем на следующую страницу
+            if (isAllValid) {
+                savePasswordToLocal();
+            }
+        }
+
+        function checkRequirement(password, requirement) {
+            // Реализуем логику для проверки каждого требования
+
+            switch (requirement) {
+                case "Минимум 5 символов":
+                    return password.length >= 5;
+                case "Хотя бы одна цифра":
+                    return /\d/.test(password);
+                case "Хотя бы одна русская буква":
+                    return /[а-яА-Я]/.test(password);
+                case "Хотя бы один специальный символ (!@#$%^&*)":
+                    return /[!@#$%^&*]/.test(password);
+                case "Хотя бы одна римская цифра (I, V, X, L, C, D, M)":
+                    return /[IVXLCDM]/.test(password);
+                case "Один из спонсоров (pepsi, shell, okay)":
+                    return /(pepsi|shell|okay)/i.test(password);
+                case "Хотя бы один символ черного флага":
+                    return /🏴/.test(password);
+                case "Слово 'пароль'":
+                    return /пароль/i.test(password);
+                case "Хотя бы один двухбуквенный символ периодической таблицы (H, He, Li, Be, ...)":
+                    return /(H|He|Li|Be|B|C|N|O|F|Ne|Na|Mg|Al|Si|P|S|Cl|K|Ar|Ca|Sc|Ti|V|Cr|Mn|Fe|Ni|Co|Cu|Zn|Ga|Ge|As|Se|Br|Kr|Rb|Sr|Y|Zr|Nb|Mo|Tc|Ru|Rh|Pd|Ag|Cd|In|Sn|Sb|Te|I|Xe|Cs|Ba|La|Ce|Pr|Nd|Pm|Sm|Eu|Gd|Tb|Dy|Ho|Er|Tm|Yb|Lu|Hf|Ta|W|Re|Os|Ir|Pt|Au|Hg|Tl|Pb|Bi|Th|Pa|U|Np|Pu|Am|Cm|Bk|Cf|Es|Fm|Md|No|Lr)/.test(password);
+                case "Смайлик фазы луны (🌛)":
+                    return /🌛/.test(password);
+                case "Капча (Случайная капча)":
+                    // Здесь может быть логика для проверки капчи
+                    // В данном случае всегда считаем, что капча верна
+                    return true;
+                default:
+                    return true; // Возвращаем true для остальных требований
+            }
+        }
+
+        function savePasswordToLocal() {
+            // Сохраняем пароль в LocalStorage
+            const passwordInput = document.getElementById('password').value;
+            localStorage.setItem('userPassword', passwordInput);
+            // Перенаправление на следующую страницу
+            window.location.href = "опр.html";
+        }
+    </script>
+
+</body>
+</html>
